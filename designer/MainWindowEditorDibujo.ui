@@ -46,7 +46,7 @@
       </property>
       <property name="maximumSize">
        <size>
-        <width>100</width>
+        <width>50</width>
         <height>16777215</height>
        </size>
       </property>
@@ -65,7 +65,7 @@
       <property name="frameShadow">
        <enum>QFrame::Plain</enum>
       </property>
-      <layout class="QGridLayout" name="gridLayout" columnstretch="1,0,0" columnminimumwidth="1,0,0">
+      <layout class="QGridLayout" name="gridLayout" columnstretch="1,0,0">
        <property name="sizeConstraint">
         <enum>QLayout::SetDefaultConstraint</enum>
        </property>
@@ -87,16 +87,76 @@
           <iconset resource="resources.qrc">
            <normaloff>:/images/img/cursor.png</normaloff>:/images/img/cursor.png</iconset>
          </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">buttonGroup</string>
+         </attribute>
         </widget>
        </item>
-       <item row="6" column="0">
-        <widget class="QPushButton" name="pbutton_extension">
+       <item row="9" column="0">
+        <widget class="QPushButton" name="pbutton_borrar">
          <property name="text">
-          <string>N</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="resources.qrc">
+           <normaloff>:/images/img/delete.png</normaloff>:/images/img/delete.png</iconset>
          </property>
         </widget>
        </item>
-       <item row="0" column="2">
+       <item row="8" column="0">
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="6" column="0">
+        <widget class="QPushButton" name="pbutton_rect">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="resources.qrc">
+           <normaloff>:/images/img/rectangle.png</normaloff>:/images/img/rectangle.png</iconset>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">buttonGroup</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QPushButton" name="pbutton_ovalo">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="resources.qrc">
+           <normaloff>:/images/img/circle.png</normaloff>:/images/img/circle.png</iconset>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">buttonGroup</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="5" column="0">
         <widget class="QPushButton" name="pbutton_linea">
          <property name="maximumSize">
           <size>
@@ -111,39 +171,12 @@
           <iconset resource="resources.qrc">
            <normaloff>:/images/img/linea.png</normaloff>:/images/img/linea.png</iconset>
          </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QPushButton" name="pbutton_borrar">
-         <property name="text">
-          <string/>
+         <property name="checkable">
+          <bool>true</bool>
          </property>
-         <property name="icon">
-          <iconset resource="resources.qrc">
-           <normaloff>:/images/img/delete.png</normaloff>:/images/img/delete.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="2">
-        <widget class="QPushButton" name="pbutton_rect">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="resources.qrc">
-           <normaloff>:/images/img/rectangle.png</normaloff>:/images/img/rectangle.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="2">
-        <widget class="QPushButton" name="pbutton_ovalo">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="resources.qrc">
-           <normaloff>:/images/img/circle.png</normaloff>:/images/img/circle.png</iconset>
-         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">buttonGroup</string>
+         </attribute>
         </widget>
        </item>
       </layout>
@@ -208,4 +241,7 @@
   <include location="resources.qrc"/>
  </resources>
  <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
 </ui>
