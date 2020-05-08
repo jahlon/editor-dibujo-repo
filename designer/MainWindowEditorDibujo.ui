@@ -46,7 +46,7 @@
       </property>
       <property name="maximumSize">
        <size>
-        <width>50</width>
+        <width>70</width>
         <height>16777215</height>
        </size>
       </property>
@@ -69,6 +69,31 @@
        <property name="sizeConstraint">
         <enum>QLayout::SetDefaultConstraint</enum>
        </property>
+       <item row="11" column="0">
+        <widget class="QLabel" name="label_color_fondo">
+         <property name="minimumSize">
+          <size>
+           <width>28</width>
+           <height>29</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Color de fondo</string>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Box</enum>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
        <item row="0" column="0">
         <widget class="QPushButton" name="pbutton_seleccionar">
          <property name="sizePolicy">
@@ -98,17 +123,6 @@
          </attribute>
         </widget>
        </item>
-       <item row="9" column="0">
-        <widget class="QPushButton" name="pbutton_borrar">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="resources.qrc">
-           <normaloff>:/images/img/delete.png</normaloff>:/images/img/delete.png</iconset>
-         </property>
-        </widget>
-       </item>
        <item row="8" column="0">
         <spacer name="horizontalSpacer">
          <property name="orientation">
@@ -121,6 +135,42 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="12" column="0">
+        <widget class="QLabel" name="label_color_linea">
+         <property name="minimumSize">
+          <size>
+           <width>28</width>
+           <height>29</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Color de línea</string>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Box</enum>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QPushButton" name="pbutton_borrar">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="resources.qrc">
+           <normaloff>:/images/img/delete.png</normaloff>:/images/img/delete.png</iconset>
+         </property>
+        </widget>
        </item>
        <item row="6" column="0">
         <widget class="QPushButton" name="pbutton_rect">
@@ -138,6 +188,19 @@
           <string notr="true">buttonGroup</string>
          </attribute>
         </widget>
+       </item>
+       <item row="10" column="0">
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
        <item row="7" column="0">
         <widget class="QPushButton" name="pbutton_ovalo">
@@ -177,6 +240,50 @@
          <attribute name="buttonGroup">
           <string notr="true">buttonGroup</string>
          </attribute>
+        </widget>
+       </item>
+       <item row="13" column="0">
+        <widget class="QSpinBox" name="spin_ancho_linea">
+         <property name="toolTip">
+          <string>Ancho de línea</string>
+         </property>
+         <property name="maximum">
+          <number>10</number>
+         </property>
+        </widget>
+       </item>
+       <item row="14" column="0">
+        <widget class="QComboBox" name="combo_tipo_linea">
+         <property name="toolTip">
+          <string>Tipo de línea</string>
+         </property>
+         <item>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/images/img/linea.png</normaloff>:/images/img/linea.png</iconset>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/images/img/dashed.png</normaloff>:/images/img/dashed.png</iconset>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/images/img/puntos.png</normaloff>:/images/img/puntos.png</iconset>
+          </property>
+         </item>
         </widget>
        </item>
       </layout>
