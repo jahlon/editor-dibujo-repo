@@ -33,7 +33,7 @@
     <item alignment="Qt::AlignTop">
      <widget class="QFrame" name="frame">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -56,34 +56,93 @@
         <height>0</height>
        </size>
       </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
       <property name="frameShape">
        <enum>QFrame::NoFrame</enum>
       </property>
       <property name="frameShadow">
        <enum>QFrame::Plain</enum>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QGridLayout" name="gridLayout" columnstretch="1,0,0" columnminimumwidth="1,0,0">
        <property name="sizeConstraint">
         <enum>QLayout::SetDefaultConstraint</enum>
        </property>
-       <item>
-        <widget class="QPushButton" name="pbutton_linea">
+       <item row="0" column="0">
+        <widget class="QPushButton" name="pbutton_seleccionar">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
          <property name="text">
-          <string>Linea</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="resources.qrc">
+           <normaloff>:/images/img/cursor.png</normaloff>:/images/img/cursor.png</iconset>
          </property>
         </widget>
        </item>
-       <item>
+       <item row="6" column="0">
+        <widget class="QPushButton" name="pbutton_extension">
+         <property name="text">
+          <string>N</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QPushButton" name="pbutton_linea">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="resources.qrc">
+           <normaloff>:/images/img/linea.png</normaloff>:/images/img/linea.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QPushButton" name="pbutton_borrar">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="resources.qrc">
+           <normaloff>:/images/img/delete.png</normaloff>:/images/img/delete.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2">
         <widget class="QPushButton" name="pbutton_rect">
          <property name="text">
-          <string>Rectángulo</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="resources.qrc">
+           <normaloff>:/images/img/rectangle.png</normaloff>:/images/img/rectangle.png</iconset>
          </property>
         </widget>
        </item>
-       <item>
+       <item row="6" column="2">
         <widget class="QPushButton" name="pbutton_ovalo">
          <property name="text">
-          <string>Óvalo</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="resources.qrc">
+           <normaloff>:/images/img/circle.png</normaloff>:/images/img/circle.png</iconset>
          </property>
         </widget>
        </item>
@@ -145,6 +204,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
