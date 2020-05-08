@@ -1,3 +1,4 @@
+import editordibujo.ui.resources
 import random as rnd
 
 from PyQt5 import uic
