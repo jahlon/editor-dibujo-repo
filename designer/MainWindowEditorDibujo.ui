@@ -228,12 +228,25 @@
      <string>Archivo</string>
     </property>
     <addaction name="actionGuardar"/>
+    <addaction name="actionAbrir_dibujo"/>
+    <addaction name="separator"/>
+    <addaction name="actionSalir"/>
    </widget>
    <addaction name="menuArchivo"/>
   </widget>
   <action name="actionGuardar">
    <property name="text">
-    <string>Guardar</string>
+    <string>Guardar dibujo</string>
+   </property>
+  </action>
+  <action name="actionAbrir_dibujo">
+   <property name="text">
+    <string>Abrir dibujo</string>
+   </property>
+  </action>
+  <action name="actionSalir">
+   <property name="text">
+    <string>Salir</string>
    </property>
   </action>
  </widget>
