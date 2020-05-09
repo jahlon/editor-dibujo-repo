@@ -65,7 +65,7 @@
       <property name="frameShadow">
        <enum>QFrame::Plain</enum>
       </property>
-      <layout class="QGridLayout" name="gridLayout" columnstretch="1,0,0">
+      <layout class="QGridLayout" name="gridLayout" columnstretch="1">
        <property name="sizeConstraint">
         <enum>QLayout::SetDefaultConstraint</enum>
        </property>
@@ -101,6 +101,9 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>Seleccionar</string>
          </property>
          <property name="layoutDirection">
           <enum>Qt::LeftToRight</enum>
@@ -163,6 +166,9 @@
        </item>
        <item row="9" column="0">
         <widget class="QPushButton" name="pbutton_borrar">
+         <property name="toolTip">
+          <string>Borrar figura seleccionada</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -174,6 +180,9 @@
        </item>
        <item row="6" column="0">
         <widget class="QPushButton" name="pbutton_rect">
+         <property name="toolTip">
+          <string>Rectángulo</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -204,6 +213,9 @@
        </item>
        <item row="7" column="0">
         <widget class="QPushButton" name="pbutton_ovalo">
+         <property name="toolTip">
+          <string>Óvalo</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -226,6 +238,9 @@
            <width>16777215</width>
            <height>16777215</height>
           </size>
+         </property>
+         <property name="toolTip">
+          <string>Línea</string>
          </property>
          <property name="text">
           <string/>
