@@ -1,9 +1,9 @@
 import editordibujo.ui.resources
 import random as rnd
 
-from PyQt5 import uic
+from PyQt5 import uic, QtGui
 from PyQt5.QtCore import QPoint, Qt
-from PyQt5.QtGui import QColor, QPainter, QPaintEvent, QPalette
+from PyQt5.QtGui import QColor, QPainter, QPaintEvent, QPalette, QBrush
 from PyQt5.QtWidgets import QMainWindow, QWidget, QFrame, QColorDialog
 
 from editordibujo.dibujo.modelo import Dibujo, Rectangulo, Linea, Ovalo
@@ -18,11 +18,25 @@ class Canvas(QWidget):
         p.setColor(self.backgroundRole(), Qt.white)
         self.setPalette(p)
 
+    def mousePressEvent(self, e: QtGui.QMouseEvent) -> None:
+        if e.button() == Qt.LeftButton:
+            self.main_window.hacer_click(e.x(), e.y())
+
     def paintEvent(self, e: QPaintEvent) -> None:
         qp = QPainter()
         qp.begin(self)
         qp.setRenderHint(QPainter.Antialiasing, True)
         self.main_window.dibujar(qp)
+
+        x_sel = self.main_window.x_seleccionado
+        y_sel = self.main_window.y_seleccionado
+        if x_sel != -1 and y_sel != -1:
+            brush = QBrush()
+            brush.setColor(Qt.green)
+            brush.setStyle(Qt.SolidPattern)
+            qp.setBrush(brush)
+            qp.drawEllipse(x_sel-2, y_sel-2, 3, 3)
+
         qp.end()
 
 
@@ -45,10 +59,6 @@ class MainWindowEditorDibujo(QMainWindow):
         self.canvas_container.setFrameStyle(QFrame.Panel | QFrame.Sunken)
         self.canvas_container.layout().addWidget(self.canvas)
 
-        self.pbutton_linea.clicked.connect(self.agregar_linea)
-        self.pbutton_rect.clicked.connect(self.agregar_rectangulo)
-        self.pbutton_ovalo.clicked.connect(self.agregar_ovalo)
-
         pal_fondo = self.label_color_fondo.palette()
         pal_fondo.setColor(QPalette.Background, Qt.blue)
         self.label_color_fondo.setPalette(pal_fondo)
@@ -57,6 +67,8 @@ class MainWindowEditorDibujo(QMainWindow):
         self.label_color_linea.setPalette(pal_linea)
         self.label_color_fondo.mousePressEvent = self.seleccionar_color_fondo
         self.label_color_linea.mousePressEvent = self.seleccionar_color_linea
+
+        self.pbutton_borrar.clicked.connect(self.borrar_figura)
 
     def hacer_click(self, x: int, y: int):
         acc = self.accion()
@@ -70,6 +82,7 @@ class MainWindowEditorDibujo(QMainWindow):
                 self.agregar_figura(self.x_seleccionado, self.y_seleccionado, x, y)
                 self.x_seleccionado = -1
                 self.y_seleccionado = -1
+        self.canvas.repaint()
 
     def accion(self):
         if self.pbutton_seleccionar.isChecked():
@@ -88,8 +101,13 @@ class MainWindowEditorDibujo(QMainWindow):
         else:
             return Qt.DotLine
 
+    def borrar_figura(self):
+        self.dibujo.borrar_figura_seleccionada()
+        self.canvas.repaint()
+
     def seleccionar(self, x: int, y: int):
-        pass
+        self.dibujo.intentar_seleccionar(x, y)
+        self.canvas.repaint()
 
     def seleccionar_color_fondo(self, event):
         pal = self.label_color_fondo.palette()
@@ -104,46 +122,20 @@ class MainWindowEditorDibujo(QMainWindow):
         self.label_color_linea.setPalette(pal)
 
     def agregar_figura(self, x1: int, y1: int, x2: int, y2: int):
-        pass
-
-    def agregar_rectangulo(self):
-        x1 = rnd.randint(0, self.canvas.width())
-        y1 = rnd.randint(0, self.canvas.height())
-        x2 = rnd.randint(0, self.canvas.width())
-        y2 = rnd.randint(0, self.canvas.height())
         p1 = QPoint(x1, y1)
         p2 = QPoint(x2, y2)
-        color = self.label_color_linea.palette().color(QPalette.Background)
-        fondo = self.label_color_fondo.palette().color(QPalette.Background)
-        linea = self.tipo_linea()
+        c_linea = self.label_color_linea.palette().color(QPalette.Background)
+        c_fondo = self.label_color_fondo.palette().color(QPalette.Background)
         ancho = self.spin_ancho_linea.value()
-        rect = Rectangulo(p1, p2, color, linea, ancho, fondo)
-        self.dibujo.agregar_figura(rect)
-        self.canvas.repaint()
+        t_linea = self.tipo_linea()
+        if self.pbutton_linea.isChecked():
+            figura = Linea(p1, p2, c_linea, t_linea, ancho)
+        elif self.pbutton_rect.isChecked():
+            figura = Rectangulo(p1, p2, c_linea, t_linea, ancho, c_fondo)
+        elif self.pbutton_ovalo.isChecked():
+            figura = Ovalo(p1, p2, c_linea, t_linea, ancho, c_fondo)
 
-    def agregar_ovalo(self):
-        x1 = rnd.randint(0, self.canvas.width())
-        y1 = rnd.randint(0, self.canvas.height())
-        x2 = rnd.randint(0, self.canvas.width())
-        y2 = rnd.randint(0, self.canvas.height())
-        p1 = QPoint(x1, y1)
-        p2 = QPoint(x2, y2)
-        color = QColor(rnd.randint(0, 255), rnd.randint(0, 255), rnd.randint(0, 255))
-        fondo = QColor(rnd.randint(0, 255), rnd.randint(0, 255), rnd.randint(0, 255))
-        oval = Ovalo(p1, p2, color, Qt.SolidLine, 2, fondo)
-        self.dibujo.agregar_figura(oval)
-        self.canvas.repaint()
-
-    def agregar_linea(self):
-        x1 = rnd.randint(0, self.canvas.width())
-        y1 = rnd.randint(0, self.canvas.height())
-        x2 = rnd.randint(0, self.canvas.width())
-        y2 = rnd.randint(0, self.canvas.height())
-        p1 = QPoint(x1, y1)
-        p2 = QPoint(x2, y2)
-        color = QColor(rnd.randint(0, 255), rnd.randint(0, 255), rnd.randint(0, 255))
-        linea = Linea(p1, p2, color, Qt.SolidLine, 2)
-        self.dibujo.agregar_figura(linea)
+        self.dibujo.agregar_figura(figura)
         self.canvas.repaint()
 
     def dibujar(self, qp: QPainter):
