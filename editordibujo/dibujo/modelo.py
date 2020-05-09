@@ -6,7 +6,7 @@ from PyQt5.QtGui import QPainter, QColor, QPen, QBrush
 
 class IFigura(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def pintar(self, qp: QPainter):
+    def pintar(self, qp: QPainter, seleccionada: bool):
         raise NotImplementedError
 
     @abc.abstractmethod
@@ -29,7 +29,7 @@ class Linea(Figura):
         super().__init__(p1, p2, color_linea, tipo_linea, ancho_linea)
         self.linea = QLine(p1, p2)
 
-    def pintar(self, qp: QPainter):
+    def pintar(self, qp: QPainter, seleccionada: bool):
         pen = QPen()
         pen.setStyle(self.tipo_linea)
         pen.setWidth(self.ancho_linea)
@@ -37,9 +37,23 @@ class Linea(Figura):
         qp.setPen(pen)
         qp.drawLine(self.linea)
 
+        if seleccionada:
+            brush = QBrush()
+            brush.setColor(Qt.green)
+            brush.setStyle(Qt.SolidPattern)
+            pen = QPen()
+            pen.setWidth(1)
+            qp.setPen(pen)
+            qp.setBrush(brush)
+            qp.drawEllipse(self.punto_1.x() - 3, self.punto_1.y() - 3, 7, 7)
+            qp.drawEllipse(self.punto_2.x() - 3, self.punto_2.y() - 3, 7, 7)
+
     def esta_dentro(self, x: int, y: int) -> bool:
-        # TODO: Implementar lógica para verificar que un punto pertenece a la línea
-        pass
+        m = (self.punto_2.y() - self.punto_1.y()) / (self.punto_2.x() - self.punto_1.x())
+        min_x = min(self.punto_1.x(), self.punto_2.x())
+        max_x = max(self.punto_1.x(), self.punto_2.x())
+        termino_y = m * (x - self.punto_1.x()) + self.punto_1.y()
+        return (min_x <= x <= max_x) and (termino_y-5 <= y <= termino_y+5)
 
 
 class FiguraRectangularConFondo(Figura, abc.ABC):
@@ -49,7 +63,7 @@ class FiguraRectangularConFondo(Figura, abc.ABC):
         self.color_fondo = color_fondo
         self.rect = QRect(p1, p2)
 
-    def pintar(self, qp: QPainter):
+    def pintar(self, qp: QPainter, seleccionada: bool):
         pen = QPen()
         pen.setStyle(self.tipo_linea)
         pen.setWidth(self.ancho_linea)
@@ -62,6 +76,19 @@ class FiguraRectangularConFondo(Figura, abc.ABC):
         qp.setPen(pen)
         qp.setBrush(brush)
         self._pintar(qp)
+
+        if seleccionada:
+            brush = QBrush()
+            brush.setColor(Qt.green)
+            brush.setStyle(Qt.SolidPattern)
+            qp.setBrush(brush)
+            pen = QPen()
+            pen.setWidth(1)
+            qp.setPen(pen)
+            qp.drawEllipse(self.punto_1.x() - 3, self.punto_1.y() - 3, 7, 7)
+            qp.drawEllipse(self.punto_1.x() - 3, self.punto_2.y() - 3, 7, 7)
+            qp.drawEllipse(self.punto_2.x() - 3, self.punto_2.y() - 3, 7, 7)
+            qp.drawEllipse(self.punto_2.x() - 3, self.punto_1.y() - 3, 7, 7)
 
     def esta_dentro(self, x: int, y: int) -> bool:
         return self.rect.contains(x, y)
@@ -93,10 +120,23 @@ class Ovalo(FiguraRectangularConFondo):
 class Dibujo:
     def __init__(self):
         self.figuras = []
+        self.seleccionada = None
 
     def agregar_figura(self, figura: IFigura):
         self.figuras.append(figura)
 
+    def intentar_seleccionar(self, x, y):
+        self.seleccionada = None
+        for f in self.figuras:
+            if f.esta_dentro(x, y):
+                self.seleccionada = f
+                break
+
+    def borrar_figura_seleccionada(self):
+        if self.seleccionada is not None:
+            self.figuras.remove(self.seleccionada)
+            self.seleccionada = None
+
     def dibujar(self, qp: QPainter):
         for f in self.figuras:
-            f.pintar(qp)
+            f.pintar(qp, f == self.seleccionada)
