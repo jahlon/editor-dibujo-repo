@@ -1,10 +1,9 @@
 import editordibujo.ui.resources
-import random as rnd
 
 from PyQt5 import uic, QtGui
 from PyQt5.QtCore import QPoint, Qt
 from PyQt5.QtGui import QColor, QPainter, QPaintEvent, QPalette, QBrush
-from PyQt5.QtWidgets import QMainWindow, QWidget, QFrame, QColorDialog
+from PyQt5.QtWidgets import QMainWindow, QWidget, QFrame, QColorDialog, QFileDialog, qApp
 
 from editordibujo.dibujo.modelo import Dibujo, Rectangulo, Linea, Ovalo
 
@@ -53,9 +52,12 @@ class MainWindowEditorDibujo(QMainWindow):
         self.canvas = Canvas(self)
         self.x_seleccionado = -1
         self.y_seleccionado = -1
+        self.guardado = False
         self.configurar_ui()
 
     def configurar_ui(self):
+        self.actualizar_titulo()
+
         self.canvas_container.setFrameStyle(QFrame.Panel | QFrame.Sunken)
         self.canvas_container.layout().addWidget(self.canvas)
 
@@ -69,6 +71,39 @@ class MainWindowEditorDibujo(QMainWindow):
         self.label_color_linea.mousePressEvent = self.seleccionar_color_linea
 
         self.pbutton_borrar.clicked.connect(self.borrar_figura)
+
+        self.accion_guardar.triggered.connect(self.guardar_dibujo)
+        self.accion_abrir.triggered.connect(self.abrir_dibujo)
+        self.accion_salir.triggered.connect(qApp.quit)
+
+    def actualizar_titulo(self):
+        mod = "*" if self.dibujo.modificado else ""
+        if self.dibujo.esta_guardado():
+            titulo = f"Editor de dibujo - {self.dibujo.archivo} {mod}"
+        else:
+            titulo = f"Editor de dibujo - Sin nombre {mod}"
+
+        self.setWindowTitle(titulo)
+
+    def guardar_dibujo(self):
+        if not self.dibujo.esta_guardado():
+            options = QFileDialog.Options()
+            file_name, _ = QFileDialog.getSaveFileName(self, "Guardar dibujo", "", "Dibujo (*.dibujo)",
+                                                       "Dibujo (*.dibujo)", options)
+            if file_name:
+                self.dibujo.guardar(file_name)
+        else:
+            self.dibujo.guardar()
+        self.actualizar_titulo()
+
+    def abrir_dibujo(self):
+        options = QFileDialog.Options()
+        file_name, _ = QFileDialog.getOpenFileName(self, "Abrir dibujo", "", "Dibujo (*.dibujo)", "Dibujo (*.dibujo)",
+                                                   options)
+        if file_name:
+            self.dibujo.abrir(file_name)
+
+        self.actualizar_titulo()
 
     def hacer_click(self, x: int, y: int):
         acc = self.accion()
@@ -104,10 +139,12 @@ class MainWindowEditorDibujo(QMainWindow):
     def borrar_figura(self):
         self.dibujo.borrar_figura_seleccionada()
         self.canvas.repaint()
+        self.actualizar_titulo()
 
     def seleccionar(self, x: int, y: int):
         self.dibujo.intentar_seleccionar(x, y)
         self.canvas.repaint()
+        self.actualizar_titulo()
 
     def seleccionar_color_fondo(self, event):
         pal = self.label_color_fondo.palette()
@@ -137,6 +174,7 @@ class MainWindowEditorDibujo(QMainWindow):
 
         self.dibujo.agregar_figura(figura)
         self.canvas.repaint()
+        self.actualizar_titulo()
 
     def dibujar(self, qp: QPainter):
         self.dibujo.dibujar(qp)
