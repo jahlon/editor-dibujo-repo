@@ -1,4 +1,5 @@
 import abc
+import pickle
 
 from PyQt5.QtCore import QPoint, Qt, QLine, QRect
 from PyQt5.QtGui import QPainter, QColor, QPen, QBrush
@@ -121,21 +122,48 @@ class Dibujo:
     def __init__(self):
         self.figuras = []
         self.seleccionada = None
+        self.archivo = None
+        self.modificado = False
+
+    def esta_guardado(self):
+        return self.archivo is not None
+
+    def guardar(self, archivo=None):
+        if archivo is not None:
+            self.archivo = archivo
+
+        with open(self.archivo, "wb") as f:
+            pickle.dump(self, f)
+
+        self.modificado = False
+
+    def abrir(self, archivo):
+        self.archivo = archivo
+
+        with open(self.archivo, "rb") as f:
+            d = pickle.load(f)
+            self.figuras = d.figuras
+            self.seleccionada = d.seleccionada
+            self.archivo = d.archivo
+            self.modificado = False
 
     def agregar_figura(self, figura: IFigura):
         self.figuras.append(figura)
+        self.modificado = True
 
     def intentar_seleccionar(self, x, y):
         self.seleccionada = None
         for f in self.figuras:
             if f.esta_dentro(x, y):
                 self.seleccionada = f
+                self.modificado = True
                 break
 
     def borrar_figura_seleccionada(self):
         if self.seleccionada is not None:
             self.figuras.remove(self.seleccionada)
             self.seleccionada = None
+            self.modificado = True
 
     def dibujar(self, qp: QPainter):
         for f in self.figuras:
