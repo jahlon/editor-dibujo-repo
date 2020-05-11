@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Editor de dibujo</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/images/img/paint.png</normaloff>:/images/img/paint.png</iconset>
+  </property>
   <widget class="QWidget" name="container">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <property name="spacing">
@@ -349,24 +353,36 @@
     <property name="title">
      <string>Archivo</string>
     </property>
-    <addaction name="actionGuardar"/>
-    <addaction name="actionAbrir_dibujo"/>
+    <addaction name="accion_guardar"/>
+    <addaction name="accion_abrir"/>
     <addaction name="separator"/>
-    <addaction name="actionSalir"/>
+    <addaction name="accion_salir"/>
    </widget>
    <addaction name="menuArchivo"/>
   </widget>
-  <action name="actionGuardar">
+  <action name="accion_guardar">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/img/save.png</normaloff>:/images/img/save.png</iconset>
+   </property>
    <property name="text">
     <string>Guardar dibujo</string>
    </property>
   </action>
-  <action name="actionAbrir_dibujo">
+  <action name="accion_abrir">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/img/open.png</normaloff>:/images/img/open.png</iconset>
+   </property>
    <property name="text">
     <string>Abrir dibujo</string>
    </property>
   </action>
-  <action name="actionSalir">
+  <action name="accion_salir">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/img/exit.png</normaloff>:/images/img/exit.png</iconset>
+   </property>
    <property name="text">
     <string>Salir</string>
    </property>

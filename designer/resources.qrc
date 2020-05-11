@@ -1,5 +1,9 @@
 <RCC>
   <qresource prefix="images">
+    <file>img/paint.png</file>
+    <file>img/exit.png</file>
+    <file>img/open.png</file>
+    <file>img/save.png</file>
     <file>img/circle.png</file>
     <file>img/cursor.png</file>
     <file>img/delete.png</file>
