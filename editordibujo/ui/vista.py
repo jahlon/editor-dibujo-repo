@@ -1,8 +1,8 @@
 import editordibujo.ui.resources
 
 from PyQt5 import uic, QtGui
-from PyQt5.QtCore import QPoint, Qt
-from PyQt5.QtGui import QColor, QPainter, QPaintEvent, QPalette, QBrush
+from PyQt5.QtCore import QPoint, Qt, QFile
+from PyQt5.QtGui import QPainter, QPaintEvent, QPalette, QBrush
 from PyQt5.QtWidgets import QMainWindow, QWidget, QFrame, QColorDialog, QFileDialog, qApp
 
 from editordibujo.dibujo.modelo import Dibujo, Rectangulo, Linea, Ovalo
@@ -47,7 +47,10 @@ class MainWindowEditorDibujo(QMainWindow):
 
     def __init__(self):
         QMainWindow.__init__(self)
-        uic.loadUi("../designer/MainWindowEditorDibujo.ui", self)
+        fileh = QFile(':/ui/MainWindowEditorDibujo.ui')
+        fileh.open(QFile.ReadOnly)
+        uic.loadUi(fileh, self)
+        fileh.close()
         self.dibujo = Dibujo()
         self.canvas = Canvas(self)
         self.x_seleccionado = -1

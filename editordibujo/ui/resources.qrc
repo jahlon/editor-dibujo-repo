@@ -13,4 +13,7 @@
     <file>img/rectangle.png</file>
     <file>img/triangle.png</file>
   </qresource>
+  <qresource prefix="ui">
+    <file>MainWindowEditorDibujo.ui</file>
+  </qresource>
 </RCC>
