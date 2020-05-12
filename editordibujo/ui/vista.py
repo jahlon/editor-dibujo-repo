@@ -104,7 +104,7 @@ class MainWindowEditorDibujo(QMainWindow):
         file_name, _ = QFileDialog.getOpenFileName(self, "Abrir dibujo", "", "Dibujo (*.dibujo)", "Dibujo (*.dibujo)",
                                                    options)
         if file_name:
-            self.dibujo.abrir(file_name)
+            self.dibujo.cargar(file_name)
 
         self.actualizar_titulo()
 
