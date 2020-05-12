@@ -137,7 +137,7 @@ class Dibujo:
 
         self.modificado = False
 
-    def abrir(self, archivo):
+    def cargar(self, archivo):
         self.archivo = archivo
 
         with open(self.archivo, "rb") as f:
